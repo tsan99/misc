@@ -1,0 +1,98 @@
+--EPBCS Common items to review for Cloud EPBCS
+--Jul-22
+--BEIGN TIPS
+
+### 1. **Use Groovy Business Rules for Smart Calculations**
+
+* **Why**: Groovy allows you to dynamically scope calculations based on edited cells, which massively reduces the calculation footprint.
+* **How**:
+
+  * Use `DataCellIterator` to only run calcs where users changed data.
+  * Example: Instead of aggregating the entire `Entity` hierarchy, target only the specific `Entity` and `Period` edited.
+
+---
+
+### 2. **Leverage Smart Push Intelligently**
+
+* **Disable by Default**: Don’t enable Smart Push on every form by default—it can kill performance.
+* **Use Groovy to Control**:
+
+  * Only trigger Smart Push when specific conditions are met (e.g., a form is saved *and* a certain scenario is selected).
+  * Push only impacted data intersections.
+
+---
+
+### 3. **Optimize Data Forms**
+
+* **Suppress Missing Data** on forms.
+* **Limit Dynamic Calculations** (especially with complex member formulas).
+* **Use Page Selectors** instead of rows/columns for large dimensions (like `Entity` or `Account`).
+* Avoid using dynamic time formulas on forms (`@PRIOR`, `@CUR`, etc.) unless performance-tested.
+
+---
+
+### 4. **Minimize Member Formulas**
+
+* Too many member formulas, especially if they include time-based logic or cross-dimension references, will slow down form loads and aggregations.
+* Move heavy formulas to business rules if possible.
+
+---
+
+### 5. **Tune Aggregations**
+
+* **Partial Aggregation**: Use business rules or Groovy to aggregate only relevant slices instead of running `Aggregate All` or aggregating entire scenarios.
+* Avoid full scenario-version aggregation unless it’s end-of-period.
+
+---
+
+### 6. **Use Plan Type Wisely**
+
+* Don’t duplicate data across plan types unless truly necessary.
+* Use **ASO plan types** (if available) for reporting-only cubes—they aggregate data faster and support large volumes.
+
+---
+
+### 7. **Automate Smart with EPM Automate**
+
+* Schedule cube refresh, data loads, and aggregations during off-peak hours using **EPM Automate**.
+* Run validations and backups automatically post-aggregation.
+
+---
+
+### 8. **Use Data Maps and Data Management Selectively**
+
+* Push data between cubes only when needed.
+* **Use filters** in data maps to limit intersection pushes.
+
+---
+
+### 9. **Monitor with Activity Reports & Job Console**
+
+* Look for:
+
+  * Long-running business rules
+  * Forms with slow load time
+  * Overused dimensions or members
+* Clean up artifacts (unused rules, maps, forms, or jobs) that can clutter processing.
+
+---
+
+## 🔍 Example: Groovy Rule for Smart Aggregation
+
+```groovy
+def editedCells = operation.grid.dataCellIterator('Working')
+while (editedCells.hasNext()) {
+    def cell = editedCells.next()
+    def ent = cell.getMemberName("Entity")
+    def per = cell.getMemberName("Period")
+    operation.application.getCube("Plan1").executeCalculationScript("""
+        FIX ("${ent}", "${per}", "Working", "FY25")
+          AGG ("Account", "Product");
+        ENDFIX
+    """)
+}
+```
+
+🔸 This only aggregates data where edits happened—not the whole cube.
+
+-- END TIPS
