@@ -1,0 +1,54 @@
+EPBCS Licensing
+
+Yes, exactly — each **POD** in Oracle Cloud EPM is a **completely isolated environment**, meaning:
+
+> 🔑 **Each POD can have its own unique set of business processes** — including Planning, FCCS, PCM, and more — along with their own cubes, metadata, and configurations.
+
+---
+
+### 🧱 **What Each POD Can Contain**
+
+Within each POD, you can enable one or more **business processes**, such as:
+
+| Business Process                     | Includes                                                      |
+| ------------------------------------ | ------------------------------------------------------------- |
+| **Planning**                         | Custom BSO/ASO cubes, forms, Groovy rules, data maps          |
+| **FCCS**                             | Prebuilt financial consolidation cubes, ownership hierarchies |
+| **ARCS**                             | Reconciliation data sources, matching rules                   |
+| **Narrative Reporting**              | Report packages, doclets, commentary workflows                |
+| **PCM (Profitability)**              | Allocation logic, drivers, tracing                            |
+| **EDM (Enterprise Data Management)** | Master data model, data governance, mappings                  |
+
+---
+
+### 💡 **Important Notes**
+
+* **Each POD is independent**: You can have completely different applications, dimensions, cubes, and users in each POD.
+* **No automatic sharing** of cubes, metadata, or security between PODs.
+
+  * You **can** use tools like **EPM Automate**, **Data Management**, or **Lifecycle Management (LCM)** to **migrate content** between PODs.
+
+---
+
+### 🧭 **Typical Multi-POD Setup Example (Enterprise License)**
+
+| POD Name     | Purpose                         | Enabled Processes                            |
+| ------------ | ------------------------------- | -------------------------------------------- |
+| **Prod**     | Live production                 | Planning, FCCS                               |
+| **Test**     | User testing + patch validation | Planning (copy of Prod)                      |
+| **Dev**      | Development sandbox             | Planning (experimental), Narrative Reporting |
+| **Training** | Training & onboarding           | Planning only                                |
+
+---
+
+### 🚫 With Standard Edition...
+
+* You're limited to **1 POD and 1 business process**, unless you pay extra for each additional POD or process.
+
+---
+
+### ✅ Summary
+
+Each **POD is a fully independent EPM environment** with its own Planning cubes, metadata, and enabled business processes. 
+If you're on **Enterprise**, you can spin up **unlimited PODs** for Dev/Test/Training and tailor each one however you like.
+
