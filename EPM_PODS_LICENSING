@@ -52,3 +52,53 @@ Within each POD, you can enable one or more **business processes**, such as:
 Each **POD is a fully independent EPM environment** with its own Planning cubes, metadata, and enabled business processes. 
 If you're on **Enterprise**, you can spin up **unlimited PODs** for Dev/Test/Training and tailor each one however you like.
 
+
+NOTE!!
+
+## ✅ **If you use the *Custom Planning* template in Oracle EPM Enterprise:**
+
+You will get:
+
+* **7 required (standard) dimensions**:
+
+  1. Account
+  2. Entity
+  3. Scenario
+  4. Version
+  5. Period
+  6. Years
+  7. Currency
+
+* **Up to 7 custom dimensions**, for a **total of 14 dimensions** in your Planning cube (per plan type / cube).
+
+---
+
+### 🧠 Important Clarifications:
+
+* **Yes**, Custom Planning supports **7 custom dimensions** (not 14 custom—14 total including the 7 required).
+* This applies **per BSO cube** (Plan Type).
+* You can add **multiple Plan Types (cubes)** in a Custom Planning app, and each one can have its own 7 custom dimensions (they don’t need to be the same across cubes).
+* This option is **only available in Enterprise EPM Cloud**.
+
+---
+
+### 🚫 What Happens in Module-Based Apps (e.g., Financials, Workforce)
+
+* Those modules come **preconfigured** with only **3 custom dimensions**, and that limit **cannot be increased**.
+* Even in Enterprise, module cubes are restricted because Oracle has locked down the dimensionality for those use cases.
+
+---
+
+### ✅ Bottom Line
+
+| App Type                               | Max Custom Dimensions | Total Dimensions (incl. required) |
+| -------------------------------------- | --------------------- | --------------------------------- |
+| **Custom Planning (Enterprise)**       | **7**                 | **14**                            |
+| **Module-based Planning (Enterprise)** | **3**                 | **10**                            |
+| **Standard Edition**                   | **3**                 | **10**                            |
+
+---
+
+Would you like help converting or starting a Custom Planning app to take advantage of all 7 custom dimensions?
+
+
